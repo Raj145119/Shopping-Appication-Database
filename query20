@@ -1,0 +1,61 @@
+Solutions of 20 questions
+
+1. SELECT COUNT(*) FROM orders WHERE orderDate >='1/AUG/20' AND  orderDate <='31/AUG/20';
+
+2. Find the total value of all items in the stock
+
+2. SELECT SUM(itemPrice*itemQuantityAvailable) FROM ITEMS;
+
+3. SELECT CUSTLNAME,CUSTFNAME,CUSTADDRESS,CUSTTOWN,CUSTPOSTCODE FROM CUSTOMERS;
+
+4.SELECT suppName, suppAddress, suppTown, suppPostcode FROM  SUPPLIERS WHERE suppID = '&Enter';
+
+5. SELECT itemDescription, itemPrice FROM ITEMS WHERE itemID IN (SELECT itemID FROM ORDER_ITEMS) ORDER BY itemPrice ASC;
+
+6. SELECT custFName, custEmail, itemDescription FROM CUSTOMERS C, ITEMS I,ORDERS O,ORDER_ITEMS OI where 
+   C.custID=O.custID AND O.orderNo=OI.orderNo AND OI.itemID=I.itemID;
+
+7. SELECT itemID,itemDescription FROM ITEMS WHERE itemID in 
+(SELECT itemID FROM ORDER_ITEMS WHERE orderNo IN 
+(SELECT orderNo FROM ORDERS WHERE orderDate <='18-SEP-20'));
+
+8. SELECT custFName, custPhone FROM CUSTOMERS WHERE custID IN (SELECT custID FROM ORDERS);
+
+9. SELECT orderNo FROM ORDERS Where (dispatchDate-orderDate)=(SELECT max(dispatchDate-orderDate)  FROM ORDERS);
+
+10. SELECT itemID,itemDescription FROM ITEMS WHERE itemQuantityAvailable>1;
+
+11. SELECT itemID,count(itemID) AS TotalQuantity FROM ORDER_ITEMS GROUP BY itemID ORDER BY count(itemID) DESC;
+
+12. update ITEMS set itemPrice = itemPrice+( (itemPrice*7.5) /100 ) where itemColour='Blue';
+
+13. *******
+
+14. update ORDERS set dispatchDate = '12-MAR-20' where orderNo=20;
+
+15. CREATE TABLE CUSTOMERS_COPY AS SELECT * FROM CUSTOMERS;
+	ALTER TABLE CUSTOMERS_COPY DROP COLUMN CUSTPHONE;
+	ALTER TABLE CUSTOMERS_COPY MODIFY CUSTEMAIL Varchar2(40);
+
+16. SELECT suppName, suppPhone, suppEMail FROM SUPPLIERS WHERE suppID IN 
+(SELECT suppID FROM SUPPLIER_ITEMS WHERE itemID IN 
+(SELECT itemID FROM ITEMS WHERE itemDescription='Western Bulldogs Jersey' ) );
+ 
+17. update ORDERS set dispatchDate = 'NULL' where orderDate >='18-SEP-20' AND orderNo IN 
+(SELECT orderNo FROM SHOP_ITEMS WHERE itemID IN (SELECT itemID FROM SHOP_ITEMS WHERE shopID IN 
+(SELECT shopID FROM SHOPS WHERE shopTown = 'Melbourne')));
+
+18. CREATE VIEW view_sydney AS SELECT * FROM SUPPLIERS WHERE SUPPTOWN ='Sydney';
+	SELECT * FROM view_sydney;
+	
+19. update view_sydney set suppPhone = '237630028' where suppID='SYDSUP123';
+	if updated in the view_sydney phone no. then suppliers table also updated;
+	
+	update view_sydney set suppAddress = '68 George Street' where suppID='SYDSUP123';
+	also with same things happen if updated in the suppliers address  then view_sydney table also updated;
+
+20. ALTER TABLE CUSTOMERS ADD credit_card number;
+	INSERT INTO CUSTOMERS VALUES ('cust343', 'Sanjeet', 'Siddh', '18 Smith Street', 'Melbourne', 3002, 377292904, 'patrick@hotmail.com', 'MEL3000','9088655576');
+
+	
+	
